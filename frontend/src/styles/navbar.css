@@ -1,0 +1,16 @@
+header {
+    width: 100%;
+    position: relative;
+    z-index: 1000;
+    background-color: #ffffff;
+}   
+
+
+@media (min-width: 768px) {
+    header {
+        background-color: transparent;
+        backdrop-filter: blur(20px);
+        position: fixed;
+        width: 100%;
+    }
+}

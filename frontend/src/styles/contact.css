@@ -1,0 +1,39 @@
+/* animations.css */
+
+/* Random Moving Animation */
+@keyframes move {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(150px, -50px); /* Move to a random position */
+  }
+  50% {
+    transform: translate(-100px, 100px); /* Move to another random position */
+  }
+  75% {
+    transform: translate(75px, -75px); /* Move to yet another random position */
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.animate-move {
+  animation: move 10s ease-in-out infinite;
+}
+
+
+.toast-custom {
+  background-color: #007BFF; /* Blue background */
+  color: white; /* White text */
+  border-radius: 8px; /* Slightly rounded corners */
+  font-size: 16px; /* Make text easy to read */
+  padding: 16px; /* Padding for spacing */
+  text-align: center; /* Center align text */
+}
+
+.toast-custom p {
+  margin: 0;
+  font-weight: bold;
+}
