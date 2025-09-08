@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useUser } from "@clerk/clerk-react";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const Expense = () => {
   const { user, isLoaded } = useUser();
   const [statement, setStatement] = useState("");
