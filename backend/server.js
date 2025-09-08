@@ -20,7 +20,7 @@ mongoose
   .then(() => console.log("✅ MongoDB connected"))
   .catch((err) => console.error("❌ MongoDB connection error:", err));
 
-// --- Schema & Model ---
+// --- Schema & Model for Expenses ---
 const expenseSchema = new mongoose.Schema({
   userId: { type: String, unique: true },
   expenses: [
@@ -38,7 +38,6 @@ const Expense = mongoose.model("Expense", expenseSchema);
 const categorizeExpense = (raw) => {
   const item = (raw || "").toLowerCase();
 
-  // 🍔 Food
   if (
     item.includes("coffee") ||
     item.includes("food") ||
@@ -51,7 +50,6 @@ const categorizeExpense = (raw) => {
   )
     return "Food";
 
-  // 🚌 Transport
   if (
     item.includes("bus") ||
     item.includes("train") ||
@@ -66,7 +64,6 @@ const categorizeExpense = (raw) => {
   )
     return "Transportation";
 
-  // 🎬 Entertainment
   if (
     item.includes("movie") ||
     item.includes("ticket") ||
@@ -76,7 +73,6 @@ const categorizeExpense = (raw) => {
   )
     return "Entertainment";
 
-  // 🏠 Utilities
   if (
     item.includes("rent") ||
     item.includes("electricity") ||
@@ -87,7 +83,6 @@ const categorizeExpense = (raw) => {
   )
     return "Utilities";
 
-  // 👕 Clothing
   if (
     item.includes("clothes") ||
     item.includes("shirt") ||
@@ -100,7 +95,6 @@ const categorizeExpense = (raw) => {
   )
     return "Clothing";
 
-  // 💻 Electronics
   if (
     item.includes("laptop") ||
     item.includes("mobile") ||
@@ -113,7 +107,6 @@ const categorizeExpense = (raw) => {
   )
     return "Electronics";
 
-  // 🏥 Health
   if (
     item.includes("doctor") ||
     item.includes("medicine") ||
@@ -124,7 +117,6 @@ const categorizeExpense = (raw) => {
   )
     return "Health";
 
-  // 🎓 Education
   if (
     item.includes("school") ||
     item.includes("college") ||
@@ -134,7 +126,6 @@ const categorizeExpense = (raw) => {
   )
     return "Education";
 
-  // 📑 Bills & Loans
   if (
     item.includes("loan") ||
     item.includes("emi") ||
@@ -155,13 +146,10 @@ const parseStatement = (statement) => {
   return { item, amount };
 };
 
-// --- Routes ---
-
-// ➕ Create (NLP supported)
+// --- Expense Routes ---
 app.post("/api/expenses", async (req, res) => {
   try {
     const { userId, statement, item: rawItem, amount: rawAmount, category: rawCategory, date } = req.body;
-
     if (!userId) return res.status(400).json({ message: "userId is required" });
 
     let item, amount, category;
@@ -170,7 +158,7 @@ app.post("/api/expenses", async (req, res) => {
       const parsed = parseStatement(statement);
       item = parsed.item;
       amount = parsed.amount;
-      category = categorizeExpense(item); // ✅ NLP auto-category
+      category = categorizeExpense(item);
     } else {
       item = rawItem || "";
       amount = Number(rawAmount) || 0;
@@ -194,7 +182,6 @@ app.post("/api/expenses", async (req, res) => {
   }
 });
 
-// 📊 Read all for user
 app.get("/api/expenses/:userId", async (req, res) => {
   try {
     const doc = await Expense.findOne({ userId: req.params.userId });
@@ -205,7 +192,6 @@ app.get("/api/expenses/:userId", async (req, res) => {
   }
 });
 
-// ✏️ Update one expense
 app.put("/api/expenses/:userId/:expenseId", async (req, res) => {
   try {
     const { userId, expenseId } = req.params;
@@ -229,7 +215,6 @@ app.put("/api/expenses/:userId/:expenseId", async (req, res) => {
   }
 });
 
-// 🗑 Delete one expense
 app.delete("/api/expenses/:userId/:expenseId", async (req, res) => {
   try {
     const { userId, expenseId } = req.params;
@@ -260,7 +245,7 @@ const incomeSchema = new mongoose.Schema({
 });
 const Income = mongoose.model("Income", incomeSchema);
 
-// ➕ Add income
+// --- Income Routes ---
 app.post("/api/income", async (req, res) => {
   try {
     const { userId, source, amount } = req.body;
@@ -282,7 +267,6 @@ app.post("/api/income", async (req, res) => {
   }
 });
 
-// 📊 Get all incomes for a user
 app.get("/api/income/:userId", async (req, res) => {
   try {
     const doc = await Income.findOne({ userId: req.params.userId });
@@ -295,6 +279,11 @@ app.get("/api/income/:userId", async (req, res) => {
 
 // ✅ Health check
 app.get("/api/status", (req, res) => res.json({ message: "The application is running!" }));
+
+// 🌐 Root route
+app.get("/", (req, res) => {
+  res.send("✅ Smart Finance Tracker Backend is running!");
+});
 
 // --- Start server ---
 const PORT = process.env.PORT || 5000;
