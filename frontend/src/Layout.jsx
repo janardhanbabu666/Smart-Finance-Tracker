@@ -5,13 +5,18 @@ import Footer from "./pages/Footer";
 
 const Layout = () => {
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
+      {/* Navbar */}
       <Navbar />
-      <main className="pt-20">
+
+      {/* Main content */}
+      <main className="flex-grow pt-20 px-4">
         <Outlet />
       </main>
+
+      {/* Footer stays at bottom */}
       <Footer />
-    </>
+    </div>
   );
 };
 
