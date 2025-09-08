@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { UserButton } from "@clerk/clerk-react";
+import { UserButton, SignedIn, SignedOut } from "@clerk/clerk-react";
 import { Menu, X } from "lucide-react"; // hamburger + close icons
 
 const Navbar = () => {
@@ -38,8 +38,13 @@ const Navbar = () => {
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
 
-            {/* User Profile */}
-            <UserButton afterSignOutUrl="/" />
+            {/* Auth Controls */}
+            <SignedIn>
+              <UserButton afterSignOutUrl="/" />
+            </SignedIn>
+            <SignedOut>
+              <Link to="/sign-in" className="hover:text-green-600">Sign In</Link>
+            </SignedOut>
           </div>
         </div>
       </div>
@@ -63,3 +68,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
