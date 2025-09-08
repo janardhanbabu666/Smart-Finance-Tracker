@@ -12,6 +12,8 @@ import {
   CartesianGrid,
 } from "recharts";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const COLORS = ["#0088FE", "#FF8042", "#00C49F", "#FFBB28"];
 
 const Dashboard = () => {
