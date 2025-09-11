@@ -13,7 +13,7 @@ const Expense = () => {
   // Fetch expenses (latest first)
   const fetchExpenses = async () => {
     if (!user) return;
-    const res = await fetch(`http://localhost:5000/api/expenses/${user.id}`);
+    const res = await fetch(`https://smart-finance-tracker-backend-pm98.onrender.com/api/expenses/${user.id}`);
     const data = await res.json();
     setExpenses(data.sort((a, b) => new Date(b.date) - new Date(a.date)));
   };
