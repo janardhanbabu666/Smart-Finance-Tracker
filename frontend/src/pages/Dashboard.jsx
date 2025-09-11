@@ -26,7 +26,7 @@ const Dashboard = () => {
   const fetchExpenses = async () => {
     if (!user) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/expenses/${user.id}`);
+      const res = await fetch(`https://smart-finance-tracker-backend-pm98.onrender.com/api/expenses/${user.id}`);
       const data = await res.json();
       setExpenses(data);
     } catch (err) {
@@ -38,7 +38,7 @@ const Dashboard = () => {
   const fetchIncomes = async () => {
     if (!user) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/income/${user.id}`);
+      const res = await fetch(`https://smart-finance-tracker-backend-pm98.onrender.com/api/income/${user.id}`);
       const data = await res.json();
       setIncomes(data);
     } catch (err) {
@@ -64,7 +64,7 @@ const Dashboard = () => {
       // ✅ Add new income to previous one
       const newTotal = latestIncome + Number(incomeInput);
 
-      await fetch("http://localhost:5000/api/income", {
+      await fetch("https://smart-finance-tracker-backend-pm98.onrender.com/api/income", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -188,7 +188,7 @@ const Dashboard = () => {
                       className="bg-red-500 text-white px-3 py-1 rounded"
                       onClick={async () => {
                         await fetch(
-                          `http://localhost:5000/api/expenses/${user.id}/${exp._id}`,
+                          `https://smart-finance-tracker-backend-pm98.onrender.com/${user.id}/${exp._id}`,
                           { method: "DELETE" }
                         );
                         fetchExpenses();
