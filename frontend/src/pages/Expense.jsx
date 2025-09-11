@@ -28,7 +28,7 @@ const Expense = () => {
     }
 
     setLoading(true);
-    await fetch("http://localhost:5000/api/expenses", {
+    await fetch("https://smart-finance-tracker-backend-pm98.onrender.com/api/expenses", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userId: user.id, statement }),
